@@ -1,0 +1,15 @@
+Configurações properties: 
+
+spring.jpa.hibernate.ddl-auto=update
+ - spring.jpa.hibernate.ddl-autopropriedade é específica do Spring Data JPA e é sua maneira de especificar um 
+   valor que será eventualmente passado para o Hibernate sob a propriedade que ele conhece hibernate.hbm2ddl.auto
+
+Os valores create, create-drop, validate, e update, basicamente, vão influenciar a forma como o 
+gerenciamento de ferramentas esquema irá manipular o esquema de banco de dados na inicialização.
+
+Por exemplo, a updateoperação consultará a API do driver JDBC para obter os metadados do banco de dados e então o Hibernate 
+compara o modelo de objeto que ele cria com base na leitura de suas classes anotadas 
+ou mapeamentos HBM XML e tentará ajustar o esquema em tempo real.
+
+A operação update, por exemplo, tentará adicionar novas colunas, restrições, etc., mas nunca removerá uma coluna ou restrição 
+que possa ter existido anteriormente, mas não faz mais parte do modelo de objeto de uma execução anterior.

@@ -1,0 +1,5 @@
+Como alterar a senha de acesso ao Banco de dados: 
+
+Acesse o banco pelo Workbench, clique em Servers > Users and Privileges .
+
+ai voce clica no "root" por ex sei lá e vai no campo do lado e troca a senha e Pronto!
