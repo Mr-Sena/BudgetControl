@@ -1,14 +1,14 @@
 package br.com.alura.challenge.backend.FinanceValuation.core.domain.model;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
 
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -19,18 +19,14 @@ public class Receita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     private String descricao;
 
-    @Column(name = "valor")
-    private BigDecimal value;
+    @NonNull
+    private BigDecimal valor;
 
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data = new java.sql.Date(System.currentTimeMillis());
+    @NonNull
+    private String data;
 
-    /*TODO: tentar marcar o tempo com LocalDateTime
-    private LocalDateTime data;
-
-     */
 
 }

@@ -20,15 +20,9 @@ public class Despesa {
     private Long id;
     private String descricao;
 
-    @Column(name = "valor")
-    private BigDecimal value;
+    private BigDecimal valor;
 
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data = new java.sql.Date(System.currentTimeMillis());
+    private String data;
 
-    /*TODO: tentar marcar o tempo com LocalDateTime
-    private LocalDateTime data;
-     */
 
 }
