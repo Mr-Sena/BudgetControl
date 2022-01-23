@@ -1,10 +1,15 @@
 package br.com.alura.challenge.backend.FinanceValuation.core.domain.model;
 
 
+import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO.ReceitaDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -13,7 +18,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "receitas")
-public class Receita {
+public class ReceitaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +31,10 @@ public class Receita {
     private BigDecimal valor;
 
     @NonNull
-    private String data;
+    private LocalDate data;
+
+
+    //public boolean sameDesciptionInMonth();
 
 
 }

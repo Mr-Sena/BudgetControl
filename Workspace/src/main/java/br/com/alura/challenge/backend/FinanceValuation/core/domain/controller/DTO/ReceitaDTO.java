@@ -1,11 +1,11 @@
 package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Receita;
+import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 public class ReceitaDTO {
 
     private String descricao;
-    private String data;
+    private LocalDate data;
     private BigDecimal valor;
 
-    public ReceitaDTO(Receita receita) {
-        this.descricao = receita.getDescricao();
-        this.data = receita.getData();
-        this.valor = receita.getValor();
+    public ReceitaDTO(ReceitaModel receitaModel) {
+        this.descricao = receitaModel.getDescricao();
+        this.data = receitaModel.getData();
+        this.valor = receitaModel.getValor();
     }
 
-    public static List<ReceitaDTO> toReceitaDTO(List<Receita> receitas) {
+    public static List<ReceitaDTO> toReceitaDTO(List<ReceitaModel> receitaModels) {
 
         List<ReceitaDTO> receitasDTO = new ArrayList<>();
 
-        receitas.stream().forEach(receita -> {
-            ReceitaDTO receitaDTO = new ReceitaDTO(receita);
+        receitaModels.stream().forEach(receitaModel -> {
+            ReceitaDTO receitaDTO = new ReceitaDTO(receitaModel);
             receitasDTO.add(receitaDTO);
         });
 
@@ -41,5 +41,7 @@ public class ReceitaDTO {
          */
 
     }
+
+
 
 }
