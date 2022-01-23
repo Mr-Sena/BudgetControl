@@ -32,7 +32,7 @@ public class ReceitaController {
     @PostMapping
     @Transactional
     public ResponseEntity<ReceitaDTO> novaReceita(@RequestBody ReceitaForm formulario, UriComponentsBuilder uriBuilder) {
-        
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
