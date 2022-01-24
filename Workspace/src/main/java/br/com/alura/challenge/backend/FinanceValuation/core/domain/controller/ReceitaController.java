@@ -4,10 +4,13 @@ package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO.ReceitaDTO;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form.ReceitaForm;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
+import br.com.alura.challenge.backend.FinanceValuation.core.domain.service.ReceitaService;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
+import jdk.javadoc.doclet.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,9 +19,13 @@ import javax.transaction.Transactional;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static br.com.alura.challenge.backend.FinanceValuation.core.domain.service.ReceitaService.businessRuleValidation;
 
 @RestController
 @RequestMapping("/receitas")
@@ -29,6 +36,7 @@ public class ReceitaController {
     @Autowired
     private ReceitaRepository receitaRepository;
 
+
     @PostMapping
     @Transactional
     public ResponseEntity<ReceitaDTO> novaReceita(@RequestBody ReceitaForm formulario, UriComponentsBuilder uriBuilder) {
@@ -37,40 +45,10 @@ public class ReceitaController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
 
-        List<ReceitaModel> receitasByData = receitaRepository.findByData(dataConvertida);
-        List<ReceitaModel> receitasByDescription = receitaRepository.findByDescricao(formulario.getDescricao());
+        List<Boolean> validationResults = businessRuleValidation(dataConvertida, formulario, receitaRepository);
 
-        boolean occurrenceSameMonth = false;
-
-        for (ReceitaModel receitaModel : receitasByData) {
-
-            if (receitaModel.getData().getYear() == dataConvertida.getYear()
-                    && receitaModel.getData().getMonth() == dataConvertida.getMonth()) {
-                occurrenceSameMonth = true;
-                break;
-            } else
-                occurrenceSameMonth = false;
-
-        }
-
-
-        boolean occurrenceSameDescription = false;
-        for (ReceitaModel receitaModel : receitasByDescription) {
-
-            if (receitaModel.getDescricao().equals(formulario.getDescricao())) {
-                occurrenceSameDescription = true;
-                break;
-            } else
-                occurrenceSameDescription = false;
-
-        }
-
-
-        /*
-        logger.info("Ocorrência com a mesma descrição(?): " + occurrenceSameDescription);
-
-        logger.info("Existe ocorrência nesse mês(?): " + occurrenceSameMonth);
-         */
+        boolean occurrenceSameMonth = validationResults.get(0);
+        boolean occurrenceSameDescription = validationResults.get(1);
 
         if (occurrenceSameDescription && occurrenceSameMonth) {
             return ResponseEntity.badRequest().build();
@@ -114,7 +92,49 @@ public class ReceitaController {
     }
 
 
-    //return ResponseEntity.ok(receitaRepository.findByData(LocalDate.now()));
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ReceitaDTO> resourceUpdate(@PathVariable Long id, @RequestBody ReceitaForm formulario) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
+
+        Optional<ReceitaModel> thisReceita = receitaRepository.findById(id);
+        if(thisReceita.isPresent()) {
+
+            List<Boolean> validationResults = businessRuleValidation(dataConvertida, formulario, receitaRepository);
+
+            boolean occurrenceSameMonth = validationResults.get(0);
+            boolean occurrenceSameDescription = validationResults.get(1);
+
+            if (occurrenceSameDescription && occurrenceSameMonth) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            ReceitaModel receita = formulario.atualizar(id, receitaRepository);
+            return ResponseEntity.ok(new ReceitaDTO(receita));
+        }
+
+        return ResponseEntity.notFound().build();
+
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> remove(@PathVariable Long id) {
+
+        Optional<ReceitaModel> thisReceita = receitaRepository.findById(id);
+
+        if(thisReceita.isPresent()) {
+
+            receitaRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+
+        }
+
+        return ResponseEntity.notFound().build();
+
+    }
 
 
 }

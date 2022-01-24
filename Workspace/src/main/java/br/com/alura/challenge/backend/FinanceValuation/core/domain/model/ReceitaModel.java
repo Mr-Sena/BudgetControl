@@ -34,7 +34,6 @@ public class ReceitaModel {
     private LocalDate data;
 
 
-    //public boolean sameDesciptionInMonth();
 
 
 }
