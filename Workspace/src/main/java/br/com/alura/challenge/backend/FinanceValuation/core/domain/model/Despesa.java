@@ -1,14 +1,12 @@
 package br.com.alura.challenge.backend.FinanceValuation.core.domain.model;
 
 
+import br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns.Categoria;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 
 
 @RequiredArgsConstructor
@@ -33,5 +31,14 @@ public class Despesa {
     @NonNull
     private LocalDate data;
 
+    private Categoria categoria;
+
+    public Despesa(@NonNull String descricao, @NonNull BigDecimal valor, @NonNull LocalDate data, Categoria categoria) {
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
+        this.categoria = categoria;
+    }
 
 }
+

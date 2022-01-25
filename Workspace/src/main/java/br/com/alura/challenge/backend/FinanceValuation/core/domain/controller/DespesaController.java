@@ -51,12 +51,27 @@ public class DespesaController {
         }
 
 
-        Despesa despesa = formulario.toDespesa();
-        despesaRepository.save(despesa);
+        try {
+
+            Despesa despesa = formulario.toDespesa();
+            despesaRepository.save(despesa);
+            URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(despesa.getId()).toUri();
+            return ResponseEntity.created(uri).body(new DespesaDTO(despesa));
+
+        } catch (IllegalArgumentException exception) {
+            logger.error("\nNão existe essa categoria: " + formulario.getCategoria());
+            logger.error("Redireconando para o tipo OUTRAS");
+
+            formulario.setCategoria("OUTRAS");
+            Despesa despesa = formulario.toDespesa();
+            despesaRepository.save(despesa);
+            URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(despesa.getId()).toUri();
+            return ResponseEntity.created(uri).body(new DespesaDTO(despesa));
+        }
 
 
-        URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(despesa.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DespesaDTO(despesa));
+
+
 
 
     }

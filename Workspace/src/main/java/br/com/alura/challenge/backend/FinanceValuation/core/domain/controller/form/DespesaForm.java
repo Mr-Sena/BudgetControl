@@ -1,5 +1,6 @@
 package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form;
 
+import br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns.Categoria;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Despesa;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
@@ -19,11 +20,19 @@ public class DespesaForm {
     private String descricao;
     private String data;
     private BigDecimal valor;
+    private String categoria;
 
     public Despesa toDespesa() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConvertida = LocalDate.parse(data, formatter);
+
+        if (categoria != null) {
+            Categoria categoriaByString = Categoria.valueOf( categoria.toUpperCase() );
+            return new Despesa(descricao, valor, dataConvertida, categoriaByString);
+        }
+
         return new Despesa(descricao, valor, dataConvertida);
+
     }
 
 
