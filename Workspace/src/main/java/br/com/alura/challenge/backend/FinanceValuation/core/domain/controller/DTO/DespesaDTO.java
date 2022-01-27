@@ -14,19 +14,21 @@ import java.util.List;
 @Setter
 public class DespesaDTO {
 
+    private Long id;
     private String descricao;
     private LocalDate data;
     private BigDecimal valor;
     private Categoria categoria;
 
     public DespesaDTO(Despesa despesa) {
+        this.id = despesa.getId();
         this.descricao = despesa.getDescricao();
         this.data = despesa.getData();
         this.valor = despesa.getValor();
         this.categoria = despesa.getCategoria();
     }
 
-    public static List<DespesaDTO> toDespesaDTO(List<Despesa> despesas) {
+    public static List<DespesaDTO> toDespesasDTO(List<Despesa> despesas) {
 
         List<DespesaDTO> despesasDTO = new ArrayList<>();
 

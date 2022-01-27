@@ -33,6 +33,10 @@ public class ReceitaModel {
     @NonNull
     private LocalDate data;
 
+    private Integer month;
+
+    private Integer year;
+
 
 
 

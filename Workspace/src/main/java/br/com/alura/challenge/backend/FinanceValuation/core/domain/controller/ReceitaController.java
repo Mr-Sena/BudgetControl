@@ -4,13 +4,10 @@ package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO.ReceitaDTO;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form.ReceitaForm;
 import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.service.ReceitaService;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
-import jdk.javadoc.doclet.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,11 +16,8 @@ import javax.transaction.Transactional;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static br.com.alura.challenge.backend.FinanceValuation.core.domain.service.ReceitaService.businessRuleValidation;
 
@@ -56,6 +50,8 @@ public class ReceitaController {
 
 
         ReceitaModel receitaModel = formulario.toReceita();
+        receitaModel.setMonth(receitaModel.getData().getMonthValue());
+        receitaModel.setYear(receitaModel.getData().getYear());
         receitaRepository.save(receitaModel);
 
 
@@ -67,10 +63,15 @@ public class ReceitaController {
     }
 
     @GetMapping
-    public List<ReceitaDTO> buscarTodos() {
+    public List<ReceitaDTO> lista(String descricao) {
 
-        List<ReceitaModel> receitaModels = receitaRepository.findAll();
-        return ReceitaDTO.toReceitaDTO(receitaModels);
+        if(descricao == null) {
+            List<ReceitaModel> receitaModels = receitaRepository.findAll();
+            return ReceitaDTO.toReceitasDTO(receitaModels);
+        } else {
+            List<ReceitaModel> receitaModels = receitaRepository.findByDescricao(descricao);
+            return ReceitaDTO.toReceitasDTO(receitaModels);
+        }
 
     }
 
@@ -90,6 +91,17 @@ public class ReceitaController {
 
 
     }
+
+
+    @GetMapping("/{ano}/{mes}")
+    public List<ReceitaDTO> encontrarPorAnoMes(@PathVariable Integer ano, @PathVariable Integer mes) {
+
+        List<ReceitaModel> receitasPorMes = receitaRepository.receitasByMonth(mes, ano);
+        return ReceitaDTO.toReceitasDTO(receitasPorMes);
+
+    }
+
+
 
 
     @PutMapping("/{id}")

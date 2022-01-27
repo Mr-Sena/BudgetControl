@@ -14,17 +14,19 @@ import java.util.stream.Collectors;
 @Setter
 public class ReceitaDTO {
 
+    private Long id;
     private String descricao;
     private LocalDate data;
     private BigDecimal valor;
 
     public ReceitaDTO(ReceitaModel receitaModel) {
+        this.id = receitaModel.getId();
         this.descricao = receitaModel.getDescricao();
         this.data = receitaModel.getData();
         this.valor = receitaModel.getValor();
     }
 
-    public static List<ReceitaDTO> toReceitaDTO(List<ReceitaModel> receitaModels) {
+    public static List<ReceitaDTO> toReceitasDTO(List<ReceitaModel> receitaModels) {
 
         List<ReceitaDTO> receitasDTO = new ArrayList<>();
 

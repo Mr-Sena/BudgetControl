@@ -7,7 +7,6 @@ import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -54,7 +53,10 @@ public class DespesaController {
         try {
 
             Despesa despesa = formulario.toDespesa();
+            despesa.setMonth(despesa.getData().getMonthValue());
+            despesa.setYear(despesa.getData().getYear());
             despesaRepository.save(despesa);
+
             URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(despesa.getId()).toUri();
             return ResponseEntity.created(uri).body(new DespesaDTO(despesa));
 
@@ -81,10 +83,10 @@ public class DespesaController {
 
         if(descricao == null) {
             List<Despesa> despesas = despesaRepository.findAll();
-            return DespesaDTO.toDespesaDTO(despesas);
+            return DespesaDTO.toDespesasDTO(despesas);
         } else {
             List<Despesa> despesas = despesaRepository.findByDescricao(descricao);
-            return DespesaDTO.toDespesaDTO(despesas);
+            return DespesaDTO.toDespesasDTO(despesas);
         }
 
 
@@ -104,6 +106,14 @@ public class DespesaController {
 
         return ResponseEntity.notFound().build();
 
+
+    }
+
+    @GetMapping("/{ano}/{mes}")
+    public List<DespesaDTO> encontrarPorAnoMes(@PathVariable Integer ano, @PathVariable Integer mes) {
+
+        List<Despesa> despesasNoMes = despesaRepository.despesasByMonth(mes, ano);
+        return DespesaDTO.toDespesasDTO(despesasNoMes);
 
     }
 

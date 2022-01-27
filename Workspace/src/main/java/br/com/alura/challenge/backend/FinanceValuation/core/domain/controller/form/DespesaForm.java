@@ -17,6 +17,7 @@ import java.util.Optional;
 @Setter
 public class DespesaForm {
 
+    private Long id;
     private String descricao;
     private String data;
     private BigDecimal valor;

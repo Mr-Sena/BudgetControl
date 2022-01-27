@@ -14,6 +14,7 @@ import java.util.Optional;
 @Setter
 public class ReceitaForm {
 
+    private Integer id;
     private String descricao;
     private String data;
     private BigDecimal valor;
