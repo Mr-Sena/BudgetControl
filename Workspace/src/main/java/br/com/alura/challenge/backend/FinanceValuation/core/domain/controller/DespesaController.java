@@ -77,10 +77,16 @@ public class DespesaController {
     }
 
     @GetMapping
-    public List<DespesaDTO> buscarTodos() {
+    public List<DespesaDTO> lista(String descricao) {
 
-        List<Despesa> despesas = despesaRepository.findAll();
-        return DespesaDTO.toDespesaDTO(despesas);
+        if(descricao == null) {
+            List<Despesa> despesas = despesaRepository.findAll();
+            return DespesaDTO.toDespesaDTO(despesas);
+        } else {
+            List<Despesa> despesas = despesaRepository.findByDescricao(descricao);
+            return DespesaDTO.toDespesaDTO(despesas);
+        }
+
 
     }
 
