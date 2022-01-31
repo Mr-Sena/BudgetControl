@@ -17,7 +17,7 @@ public interface ReceitaRepository extends JpaRepository<ReceitaModel, Long> {
 
     public List<ReceitaModel> findByDescricao(String description);
 
-    @Query(value = "select * from receitas where month = :mes and year = :ano", nativeQuery = true)
+    @Query(value = "select * from receitas where month(data) = :mes and year(data) = :ano", nativeQuery = true)
     List<ReceitaModel> receitasByMonth(@Param("mes") Integer mes, @Param("ano") Integer ano);
 
 }

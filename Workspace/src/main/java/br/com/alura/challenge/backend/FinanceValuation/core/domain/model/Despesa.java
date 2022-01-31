@@ -33,9 +33,6 @@ public class Despesa {
 
     private Categoria categoria;
 
-    private Integer month;
-
-    private Integer year;
 
     public Despesa(@NonNull String descricao, @NonNull BigDecimal valor, @NonNull LocalDate data, Categoria categoria) {
         this.descricao = descricao;

@@ -50,8 +50,6 @@ public class ReceitaController {
 
 
         ReceitaModel receitaModel = formulario.toReceita();
-        receitaModel.setMonth(receitaModel.getData().getMonthValue());
-        receitaModel.setYear(receitaModel.getData().getYear());
         receitaRepository.save(receitaModel);
 
 

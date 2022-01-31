@@ -53,8 +53,6 @@ public class DespesaController {
         try {
 
             Despesa despesa = formulario.toDespesa();
-            despesa.setMonth(despesa.getData().getMonthValue());
-            despesa.setYear(despesa.getData().getYear());
             despesaRepository.save(despesa);
 
             URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(despesa.getId()).toUri();
