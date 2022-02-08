@@ -1,11 +1,11 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller;
+package br.com.alura.challenge.backend.FinanceValuation.controller;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns.Categoria;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Despesa;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ResumoMes;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.enuns.Categoria;
+import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.model.ReceitaModel;
+import br.com.alura.challenge.backend.FinanceValuation.model.ResumoMes;
+import br.com.alura.challenge.backend.FinanceValuation.repository.DespesaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.repository.ReceitaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

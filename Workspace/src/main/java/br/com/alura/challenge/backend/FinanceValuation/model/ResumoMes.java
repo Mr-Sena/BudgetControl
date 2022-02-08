@@ -1,4 +1,4 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.model;
+package br.com.alura.challenge.backend.FinanceValuation.model;
 
 import lombok.Getter;
 import lombok.Setter;

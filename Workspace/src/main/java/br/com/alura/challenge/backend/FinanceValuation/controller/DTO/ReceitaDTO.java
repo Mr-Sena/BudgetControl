@@ -1,6 +1,6 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO;
+package br.com.alura.challenge.backend.FinanceValuation.controller.DTO;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
+import br.com.alura.challenge.backend.FinanceValuation.model.ReceitaModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

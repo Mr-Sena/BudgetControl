@@ -1,6 +1,6 @@
-package br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository;
+package br.com.alura.challenge.backend.FinanceValuation.repository;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

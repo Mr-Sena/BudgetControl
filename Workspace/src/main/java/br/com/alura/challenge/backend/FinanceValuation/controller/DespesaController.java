@@ -1,9 +1,9 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller;
+package br.com.alura.challenge.backend.FinanceValuation.controller;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO.DespesaDTO;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form.DespesaForm;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Despesa;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.DespesaDTO;
+import br.com.alura.challenge.backend.FinanceValuation.controller.form.DespesaForm;
+import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.repository.DespesaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.alura.challenge.backend.FinanceValuation.core.domain.service.DespesaService.businessRuleValidation;
+import static br.com.alura.challenge.backend.FinanceValuation.service.DespesaService.businessRuleValidation;
 
 
 @RestController

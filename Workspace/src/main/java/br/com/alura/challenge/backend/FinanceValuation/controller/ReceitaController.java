@@ -1,10 +1,11 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller;
+package br.com.alura.challenge.backend.FinanceValuation.controller;
 
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO.ReceitaDTO;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form.ReceitaForm;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.ReceitaDTO;
+import br.com.alura.challenge.backend.FinanceValuation.controller.form.ReceitaForm;
+import br.com.alura.challenge.backend.FinanceValuation.model.ReceitaModel;
+import br.com.alura.challenge.backend.FinanceValuation.service.ReceitaService;
+import br.com.alura.challenge.backend.FinanceValuation.repository.ReceitaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-
-import static br.com.alura.challenge.backend.FinanceValuation.core.domain.service.ReceitaService.businessRuleValidation;
 
 @RestController
 @RequestMapping("/receitas")
@@ -39,7 +38,7 @@ public class ReceitaController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
 
-        List<Boolean> validationResults = businessRuleValidation(dataConvertida, formulario, receitaRepository);
+        List<Boolean> validationResults = ReceitaService.businessRuleValidation(dataConvertida, formulario, receitaRepository);
 
         boolean occurrenceSameMonth = validationResults.get(0);
         boolean occurrenceSameDescription = validationResults.get(1);
@@ -112,7 +111,7 @@ public class ReceitaController {
         Optional<ReceitaModel> thisReceita = receitaRepository.findById(id);
         if(thisReceita.isPresent()) {
 
-            List<Boolean> validationResults = businessRuleValidation(dataConvertida, formulario, receitaRepository);
+            List<Boolean> validationResults = ReceitaService.businessRuleValidation(dataConvertida, formulario, receitaRepository);
 
             boolean occurrenceSameMonth = validationResults.get(0);
             boolean occurrenceSameDescription = validationResults.get(1);

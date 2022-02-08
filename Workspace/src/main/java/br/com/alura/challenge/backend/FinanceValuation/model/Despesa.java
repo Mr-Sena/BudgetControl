@@ -1,7 +1,7 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.model;
+package br.com.alura.challenge.backend.FinanceValuation.model;
 
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns.Categoria;
+import br.com.alura.challenge.backend.FinanceValuation.enuns.Categoria;
 import lombok.*;
 
 import javax.persistence.*;

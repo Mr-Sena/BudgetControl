@@ -1,10 +1,8 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form;
+package br.com.alura.challenge.backend.FinanceValuation.controller.form;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns.Categoria;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Despesa;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.enuns.Categoria;
+import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.repository.DespesaRepository;
 import lombok.Getter;
 import lombok.Setter;
 

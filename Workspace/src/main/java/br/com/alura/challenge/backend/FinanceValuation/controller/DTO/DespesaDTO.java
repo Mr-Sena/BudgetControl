@@ -1,7 +1,7 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO;
+package br.com.alura.challenge.backend.FinanceValuation.controller.DTO;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns.Categoria;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.enuns.Categoria;
+import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
 import lombok.Getter;
 import lombok.Setter;
 

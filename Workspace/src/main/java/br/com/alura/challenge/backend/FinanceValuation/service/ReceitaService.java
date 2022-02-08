@@ -1,8 +1,8 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.service;
+package br.com.alura.challenge.backend.FinanceValuation.service;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.form.ReceitaForm;
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.controller.form.ReceitaForm;
+import br.com.alura.challenge.backend.FinanceValuation.model.ReceitaModel;
+import br.com.alura.challenge.backend.FinanceValuation.repository.ReceitaRepository;
 
 import java.time.LocalDate;
 import java.util.Arrays;

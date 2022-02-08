@@ -1,4 +1,4 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.enuns;
+package br.com.alura.challenge.backend.FinanceValuation.enuns;
 
 public enum Categoria {
 

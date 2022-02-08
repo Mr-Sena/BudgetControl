@@ -1,15 +1,11 @@
-package br.com.alura.challenge.backend.FinanceValuation.core.domain.model;
+package br.com.alura.challenge.backend.FinanceValuation.model;
 
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.controller.DTO.ReceitaDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
