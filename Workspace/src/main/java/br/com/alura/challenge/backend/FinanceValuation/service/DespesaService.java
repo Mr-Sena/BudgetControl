@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DespesaService {
 
-    public static List<Boolean> businessRuleValidation(LocalDate dataConvertida, DespesaForm formulario, DespesaRepository despesaRepository) {
+    public static List<Boolean> duplicityValidation(LocalDate dataConvertida, DespesaForm formulario, DespesaRepository despesaRepository) {
         List<Despesa> despesasByData = despesaRepository.findByData(dataConvertida);
         List<Despesa> despesasByDescription = despesaRepository.findByDescricao(formulario.getDescricao());
 

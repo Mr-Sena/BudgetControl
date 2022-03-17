@@ -1,16 +1,12 @@
 package br.com.alura.challenge.backend.FinanceValuation.controller;
 
-import br.com.alura.challenge.backend.FinanceValuation.core.domain.model.ReceitaModel;
+import br.com.alura.challenge.backend.FinanceValuation.model.ReceitaModel;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 //import org.junit.Test;
 
-import java.time.LocalDate;
-
 import static io.restassured.RestAssured.*;
-import static io.restassured.matcher.RestAssuredMatchers.*;
-import static org.hamcrest.Matchers.*;
 
 public class ReceitaTest {
 

@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.alura.challenge.backend.FinanceValuation.service.DespesaService.businessRuleValidation;
+import static br.com.alura.challenge.backend.FinanceValuation.service.DespesaService.duplicityValidation;
 
 
 @RestController
@@ -40,7 +40,7 @@ public class DespesaController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
 
-        List<Boolean> validationResults = businessRuleValidation(dataConvertida, formulario, despesaRepository);
+        List<Boolean> validationResults = duplicityValidation(dataConvertida, formulario, despesaRepository);
 
         boolean occurrenceSameMonth = validationResults.get(0);
         boolean occurrenceSameDescription = validationResults.get(1);
@@ -126,7 +126,7 @@ public class DespesaController {
         Optional<Despesa> thisDespesa = despesaRepository.findById(id);
         if(thisDespesa.isPresent()) {
 
-            List<Boolean> validationResults = businessRuleValidation(dataConvertida, formulario, despesaRepository);
+            List<Boolean> validationResults = duplicityValidation(dataConvertida, formulario, despesaRepository);
 
             boolean occurrenceSameMonth = validationResults.get(0);
             boolean occurrenceSameDescription = validationResults.get(1);
