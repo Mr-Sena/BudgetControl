@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ReceitaService {
 
-    public static List<Boolean> businessRuleValidation(LocalDate dataConvertida, ReceitaForm formulario, ReceitaRepository receitaRepository) {
+    public static List<Boolean> duplicityValidation(LocalDate dataConvertida, ReceitaForm formulario, ReceitaRepository receitaRepository) {
         List<ReceitaModel> receitasByData = receitaRepository.findByData(dataConvertida);
         List<ReceitaModel> receitasByDescription = receitaRepository.findByDescricao(formulario.getDescricao());
 

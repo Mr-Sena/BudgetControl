@@ -38,7 +38,7 @@ public class ReceitaController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
 
-        List<Boolean> validationResults = ReceitaService.businessRuleValidation(dataConvertida, formulario, receitaRepository);
+        List<Boolean> validationResults = ReceitaService.duplicityValidation(dataConvertida, formulario, receitaRepository);
 
         boolean occurrenceSameMonth = validationResults.get(0);
         boolean occurrenceSameDescription = validationResults.get(1);
@@ -111,7 +111,7 @@ public class ReceitaController {
         Optional<ReceitaModel> thisReceita = receitaRepository.findById(id);
         if(thisReceita.isPresent()) {
 
-            List<Boolean> validationResults = ReceitaService.businessRuleValidation(dataConvertida, formulario, receitaRepository);
+            List<Boolean> validationResults = ReceitaService.duplicityValidation(dataConvertida, formulario, receitaRepository);
 
             boolean occurrenceSameMonth = validationResults.get(0);
             boolean occurrenceSameDescription = validationResults.get(1);
