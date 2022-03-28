@@ -1,3 +1,4 @@
 /*/.idea/*
 TODO: revisar a necessidade de ignorar os arquivos do .idea
 Shortcuts/**
+/*/target/*
