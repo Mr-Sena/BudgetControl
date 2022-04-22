@@ -1,16 +1,19 @@
 package br.com.alura.challenge.backend.FinanceValuation.controller;
 
+import br.com.alura.challenge.backend.FinanceValuation.config.validacao.RegistroDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.UsuarioDTO;
 import br.com.alura.challenge.backend.FinanceValuation.controller.form.CadastroForm;
 import br.com.alura.challenge.backend.FinanceValuation.model.Usuario;
 import br.com.alura.challenge.backend.FinanceValuation.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/cadastro")
@@ -33,7 +36,11 @@ public class CadastoUsuarioController {
         usuario.setNome(form.getNome());
         usuario.setSenha(encoder.encode(form.getSenha()));
 
-        repository.save(usuario);
+        try {
+            repository.save(usuario);
+        } catch (DataIntegrityViolationException exception) {
+            throw new RegistroDuplicadoException();
+        }
 
         UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getNome(), usuario.getEmail(), usuario.getSenha());
 
