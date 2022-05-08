@@ -3,12 +3,12 @@ package br.com.alura.challenge.backend.FinanceValuation.controller.form;
 import br.com.alura.challenge.backend.FinanceValuation.enuns.Categoria;
 import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
 import br.com.alura.challenge.backend.FinanceValuation.repository.DespesaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.service.DataConverter;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Getter
@@ -22,8 +22,7 @@ public class DespesaForm {
     private String categoria;
 
     public Despesa toDespesa() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(data, formatter);
+        LocalDate dataConvertida = DataConverter.toConvert(data);
 
         if (categoria != null) {
             Categoria categoriaByString = Categoria.valueOf( categoria.toUpperCase() );
@@ -40,8 +39,8 @@ public class DespesaForm {
         Optional<Despesa> despesa = repository.findById(id);
         despesa.get().setValor(this.valor);
         despesa.get().setDescricao(this.descricao);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        despesa.get().setData(LocalDate.parse(this.data, formatter));
+        LocalDate dataConvertida = DataConverter.toConvert(data);
+        despesa.get().setData(dataConvertida);
 
         return despesa.get();
 

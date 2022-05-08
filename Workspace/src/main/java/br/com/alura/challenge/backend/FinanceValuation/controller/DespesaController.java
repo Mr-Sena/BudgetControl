@@ -1,11 +1,11 @@
 package br.com.alura.challenge.backend.FinanceValuation.controller;
 
 import br.com.alura.challenge.backend.FinanceValuation.config.validacao.RegistroDuplicadoException;
-import br.com.alura.challenge.backend.FinanceValuation.config.validacao.UsuarioDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.DespesaDTO;
 import br.com.alura.challenge.backend.FinanceValuation.controller.form.DespesaForm;
 import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
 import br.com.alura.challenge.backend.FinanceValuation.repository.DespesaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.service.DataConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +38,7 @@ public class DespesaController {
     public ResponseEntity<DespesaDTO> novaDespesa(@RequestBody DespesaForm formulario, UriComponentsBuilder uriBuilder) {
 
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
+        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
         List<Boolean> validationResults = duplicityValidation(dataConvertida, formulario, despesaRepository);
 
@@ -61,8 +59,8 @@ public class DespesaController {
             return ResponseEntity.created(uri).body(new DespesaDTO(despesa));
 
         } catch (IllegalArgumentException exception) {
-            logger.error("\nNão existe essa categoria: " + formulario.getCategoria());
-            logger.error("Redireconando para o tipo OUTRAS");
+            logger.error("\nNão existe essa categoria: " + formulario.getCategoria() +
+                    "\nRedireconando para o tipo \"OUTRAS\"...");
 
             formulario.setCategoria("OUTRAS");
             Despesa despesa = formulario.toDespesa();
@@ -122,8 +120,7 @@ public class DespesaController {
     @Transactional
     public ResponseEntity<DespesaDTO> resourceUpdate(@PathVariable Long id, @RequestBody DespesaForm formulario) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
+        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
         Optional<Despesa> thisDespesa = despesaRepository.findById(id);
         if(thisDespesa.isPresent()) {
@@ -162,20 +159,5 @@ public class DespesaController {
 
     }
 
-    /*
-    @Autowired
-    DespesaRepository despesaRepository;
 
-    @PostMapping
-    @Transactional
-    ResponseEntity<Despesa> novaDespesa(@RequestBody Despesa despesa) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(despesaRepository.save(despesa));
-    }
-
-    @GetMapping
-    public List<Despesa> buscarTodos() {
-        return despesaRepository.findAll();
-    }
-
-     */
 }

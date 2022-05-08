@@ -1,11 +1,13 @@
 package br.com.alura.challenge.backend.FinanceValuation.controller;
 
 
+import br.com.alura.challenge.backend.FinanceValuation.config.validacao.RegistroDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.ReceitaDTO;
 import br.com.alura.challenge.backend.FinanceValuation.controller.form.ReceitaForm;
 import br.com.alura.challenge.backend.FinanceValuation.model.ReceitaModel;
-import br.com.alura.challenge.backend.FinanceValuation.service.ReceitaService;
 import br.com.alura.challenge.backend.FinanceValuation.repository.ReceitaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.service.DataConverter;
+import br.com.alura.challenge.backend.FinanceValuation.service.ReceitaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +36,7 @@ public class ReceitaController {
     public ResponseEntity<ReceitaDTO> novaReceita(@RequestBody ReceitaForm formulario, UriComponentsBuilder uriBuilder) {
 
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
+        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
         List<Boolean> validationResults = ReceitaService.duplicityValidation(dataConvertida, formulario, receitaRepository);
 
@@ -44,7 +44,7 @@ public class ReceitaController {
         boolean occurrenceSameDescription = validationResults.get(1);
 
         if (occurrenceSameDescription && occurrenceSameMonth) {
-            return ResponseEntity.badRequest().build();
+            throw new RegistroDuplicadoException();
         }
 
 
@@ -105,8 +105,7 @@ public class ReceitaController {
     @Transactional
     public ResponseEntity<ReceitaDTO> resourceUpdate(@PathVariable Long id, @RequestBody ReceitaForm formulario) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(formulario.getData(), formatter);
+        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
         Optional<ReceitaModel> thisReceita = receitaRepository.findById(id);
         if(thisReceita.isPresent()) {
@@ -117,7 +116,7 @@ public class ReceitaController {
             boolean occurrenceSameDescription = validationResults.get(1);
 
             if (occurrenceSameDescription && occurrenceSameMonth) {
-                return ResponseEntity.badRequest().build();
+                throw new RegistroDuplicadoException();
             }
 
             ReceitaModel receita = formulario.atualizar(id, receitaRepository);
