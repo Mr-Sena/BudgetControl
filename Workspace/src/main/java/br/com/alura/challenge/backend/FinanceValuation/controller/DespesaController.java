@@ -1,5 +1,7 @@
 package br.com.alura.challenge.backend.FinanceValuation.controller;
 
+import br.com.alura.challenge.backend.FinanceValuation.config.validacao.RegistroDuplicadoException;
+import br.com.alura.challenge.backend.FinanceValuation.config.validacao.UsuarioDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.DespesaDTO;
 import br.com.alura.challenge.backend.FinanceValuation.controller.form.DespesaForm;
 import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
@@ -46,7 +48,7 @@ public class DespesaController {
         boolean occurrenceSameDescription = validationResults.get(1);
 
         if (occurrenceSameDescription && occurrenceSameMonth) {
-            return ResponseEntity.badRequest().build();
+            throw new RegistroDuplicadoException();
         }
 
 

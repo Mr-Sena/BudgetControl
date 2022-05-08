@@ -1,6 +1,6 @@
 package br.com.alura.challenge.backend.FinanceValuation.controller;
 
-import br.com.alura.challenge.backend.FinanceValuation.config.validacao.RegistroDuplicadoException;
+import br.com.alura.challenge.backend.FinanceValuation.config.validacao.UsuarioDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.controller.DTO.UsuarioDTO;
 import br.com.alura.challenge.backend.FinanceValuation.controller.form.CadastroForm;
 import br.com.alura.challenge.backend.FinanceValuation.model.Usuario;
@@ -39,7 +39,7 @@ public class CadastoUsuarioController {
         try {
             repository.save(usuario);
         } catch (DataIntegrityViolationException exception) {
-            throw new RegistroDuplicadoException();
+            throw new UsuarioDuplicadoException();
         }
 
         UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getNome(), usuario.getEmail(), usuario.getSenha());

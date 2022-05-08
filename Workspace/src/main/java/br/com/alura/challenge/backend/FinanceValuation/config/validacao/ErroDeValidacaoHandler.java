@@ -12,11 +12,21 @@ public class ErroDeValidacaoHandler {
 
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(RegistroDuplicadoException.class)
-    public String handle(RegistroDuplicadoException exception) {
+    @ExceptionHandler(UsuarioDuplicadoException.class)
+    public String handle(UsuarioDuplicadoException exception) {
 
         return "Ocorrência de registro duplicado: Usuário já cadastrado.";
 
     }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RegistroDuplicadoException.class)
+    public String alreadyCadastre(RegistroDuplicadoException e) {
+
+        return "Ocorrência de registro duplicado: cadastro com essa data e descrição já foi efetuado.";
+
+    }
+
+
 
 }
