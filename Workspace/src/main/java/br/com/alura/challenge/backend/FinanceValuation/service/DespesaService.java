@@ -1,8 +1,8 @@
 package br.com.alura.challenge.backend.FinanceValuation.service;
 
-import br.com.alura.challenge.backend.FinanceValuation.controller.form.DespesaForm;
-import br.com.alura.challenge.backend.FinanceValuation.model.Despesa;
-import br.com.alura.challenge.backend.FinanceValuation.repository.DespesaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.form.DespesaForm;
+import br.com.alura.challenge.backend.FinanceValuation.domain.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
 
 import java.time.LocalDate;
 import java.util.Arrays;
