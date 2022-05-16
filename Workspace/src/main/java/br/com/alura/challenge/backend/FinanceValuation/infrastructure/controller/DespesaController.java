@@ -6,6 +6,7 @@ import br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller
 import br.com.alura.challenge.backend.FinanceValuation.domain.Despesa;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
 import br.com.alura.challenge.backend.FinanceValuation.service.DataConverter;
+import br.com.alura.challenge.backend.FinanceValuation.service.ValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.alura.challenge.backend.FinanceValuation.service.DespesaService.duplicityValidation;
 
 
 @RestController
@@ -38,20 +38,9 @@ public class DespesaController {
     public ResponseEntity<DespesaDTO> novaDespesa(@RequestBody DespesaForm formulario, UriComponentsBuilder uriBuilder) {
 
 
-        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
-
-        List<Boolean> validationResults = duplicityValidation(dataConvertida, formulario, despesaRepository);
-
-        boolean occurrenceSameMonth = validationResults.get(0);
-        boolean occurrenceSameDescription = validationResults.get(1);
-
-        if (occurrenceSameDescription && occurrenceSameMonth) {
-            throw new RegistroDuplicadoException();
-        }
-
+        ValidationService.validarDuplicidade(formulario, despesaRepository);
 
         try {
-
             Despesa despesa = formulario.toDomain();
             despesaRepository.save(despesa);
 
@@ -68,12 +57,6 @@ public class DespesaController {
             URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(despesa.getId()).toUri();
             return ResponseEntity.created(uri).body(new DespesaDTO(despesa));
         }
-
-
-
-
-
-
     }
 
     @GetMapping
@@ -83,7 +66,7 @@ public class DespesaController {
             List<Despesa> despesas = despesaRepository.findAll();
             return DespesaDTO.toDespesasDTO(despesas);
         } else {
-            List<Despesa> despesas = despesaRepository.findByDescricao(descricao);
+            List despesas = despesaRepository.findByDescricao(descricao);
             return DespesaDTO.toDespesasDTO(despesas);
         }
 
@@ -125,7 +108,7 @@ public class DespesaController {
         Optional<Despesa> thisDespesa = despesaRepository.findById(id);
         if(thisDespesa.isPresent()) {
 
-            List<Boolean> validationResults = duplicityValidation(dataConvertida, formulario, despesaRepository);
+            List<Boolean> validationResults = ValidationService.duplicityValidation(dataConvertida, formulario, despesaRepository);
 
             boolean occurrenceSameMonth = validationResults.get(0);
             boolean occurrenceSameDescription = validationResults.get(1);

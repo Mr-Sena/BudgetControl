@@ -1,5 +1,6 @@
 package br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.DTO;
 
+import br.com.alura.challenge.backend.FinanceValuation.core.Balance;
 import br.com.alura.challenge.backend.FinanceValuation.domain.Receita;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,12 +26,12 @@ public class ReceitaDTO {
         this.valor = receita.getValor();
     }
 
-    public static List<ReceitaDTO> toReceitasDTO(List<Receita> receitas) {
+    public static List<ReceitaDTO> toReceitasDTO(List<Balance> receitas) {
 
         List<ReceitaDTO> receitasDTO = new ArrayList<>();
 
         receitas.stream().forEach(receitaModel -> {
-            ReceitaDTO receitaDTO = new ReceitaDTO(receitaModel);
+            ReceitaDTO receitaDTO = new ReceitaDTO((Receita) receitaModel);
             receitasDTO.add(receitaDTO);
         });
 

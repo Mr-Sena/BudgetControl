@@ -1,10 +1,6 @@
 package br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.form;
 
 import br.com.alura.challenge.backend.FinanceValuation.core.Balance;
-import br.com.alura.challenge.backend.FinanceValuation.core.Repositorio;
-import br.com.alura.challenge.backend.FinanceValuation.domain.Despesa;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface Formulario {
 
@@ -16,6 +12,8 @@ public interface Formulario {
      */
 
     public String getDescricao();
+
+    public String getData();
 
 
 }

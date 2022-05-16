@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface Repositorio {
 
-    public List<Despesa> findByData(LocalDate data);
+    public List<Balance> findByData(LocalDate data);
 
-    public List<Despesa> findByDescricao(String description);
+    public List<Balance> findByDescricao(String description);
 
     @Query(value = "select * from despesas where month(data) = :month and year(data) = :year", nativeQuery = true)
     public List<Despesa> despesasByMonth(@Param("month") Integer mes, @Param("year") Integer ano);
