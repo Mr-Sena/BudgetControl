@@ -91,19 +91,12 @@ public class ReceitaController {
     @Transactional
     public ResponseEntity<ReceitaDTO> resourceUpdate(@PathVariable Long id, @RequestBody ReceitaForm formulario) {
 
-        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
         Optional<Receita> thisReceita = receitaRepository.findById(id);
+
         if(thisReceita.isPresent()) {
 
-            List<Boolean> validationResults = ValidationService.duplicityValidation(dataConvertida, formulario, receitaRepository);
-
-            boolean occurrenceSameMonth = validationResults.get(0);
-            boolean occurrenceSameDescription = validationResults.get(1);
-
-            if (occurrenceSameDescription && occurrenceSameMonth) {
-                throw new RegistroDuplicadoException();
-            }
+            ValidationService.validarDuplicidade(formulario, receitaRepository, id);
 
             Receita receita = formulario.atualizar(id, receitaRepository);
             return ResponseEntity.ok(new ReceitaDTO(receita));

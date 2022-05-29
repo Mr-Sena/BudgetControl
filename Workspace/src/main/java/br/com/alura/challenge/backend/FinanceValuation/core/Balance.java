@@ -8,4 +8,6 @@ public interface Balance {
 
     public String getDescricao();
 
+    public Long getId();
+
 }

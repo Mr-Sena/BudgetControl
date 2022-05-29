@@ -103,23 +103,17 @@ public class DespesaController {
     @Transactional
     public ResponseEntity<DespesaDTO> resourceUpdate(@PathVariable Long id, @RequestBody DespesaForm formulario) {
 
-        LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
         Optional<Despesa> thisDespesa = despesaRepository.findById(id);
+
         if(thisDespesa.isPresent()) {
 
-            List<Boolean> validationResults = ValidationService.duplicityValidation(dataConvertida, formulario, despesaRepository);
+            ValidationService.validarDuplicidade(formulario, despesaRepository, id);
 
-            boolean occurrenceSameMonth = validationResults.get(0);
-            boolean occurrenceSameDescription = validationResults.get(1);
-
-            if (occurrenceSameDescription && occurrenceSameMonth) {
-                throw new RegistroDuplicadoException();
-            }
-
-            Despesa despesa = (Despesa) formulario.atualizar(id, despesaRepository);
+            Despesa despesa = formulario.atualizar(id, despesaRepository);
             return ResponseEntity.ok(new DespesaDTO(despesa));
         }
+
 
         return ResponseEntity.notFound().build();
 
