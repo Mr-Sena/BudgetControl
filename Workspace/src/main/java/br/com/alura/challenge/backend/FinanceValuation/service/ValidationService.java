@@ -2,10 +2,15 @@ package br.com.alura.challenge.backend.FinanceValuation.service;
 
 import br.com.alura.challenge.backend.FinanceValuation.core.Balance;
 import br.com.alura.challenge.backend.FinanceValuation.core.Repositorio;
+import br.com.alura.challenge.backend.FinanceValuation.domain.Despesa;
+import br.com.alura.challenge.backend.FinanceValuation.domain.Receita;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.config.validacao.RegistroDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.form.Formulario;
+import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
+import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -91,15 +96,33 @@ public class ValidationService {
     public static List<Boolean> cleanUpdate(LocalDate dataConvertida, Formulario formulario,
                                             Repositorio repositorio, Long idToBeUpdated) {
 
-        List<Balance> registrosByData = repositorio.findByData(dataConvertida);
+        Integer mes = dataConvertida.getMonthValue();
+        Integer ano = dataConvertida.getYear();
+
+
+        List registrosByData = new ArrayList();
+
+        if (repositorio instanceof ReceitaRepository) {
+            registrosByData = new ArrayList<>();
+            ReceitaRepository repoReceita = (ReceitaRepository) repositorio;
+            registrosByData = repoReceita.receitasByMonth(mes, ano);
+        }
+
+        if (repositorio instanceof DespesaRepository) {
+            registrosByData = new ArrayList<>();
+            DespesaRepository repoDespesa = (DespesaRepository) repositorio;
+            registrosByData = repoDespesa.despesasByMonth(mes, ano);
+        }
+
         List<Balance> registrosByDescription = repositorio.findByDescricao(formulario.getDescricao());
 
 
         Balance toRemove = null;
 
-        for (Balance registro : registrosByData) {
-            if (registro.getId() == idToBeUpdated) {
-                toRemove = registro;
+        for (Object registro : registrosByData) {
+
+            if (((Balance) registro).getId() == idToBeUpdated) {
+                toRemove = ((Balance) registro);
             }
         }
         registrosByData.remove(toRemove);
