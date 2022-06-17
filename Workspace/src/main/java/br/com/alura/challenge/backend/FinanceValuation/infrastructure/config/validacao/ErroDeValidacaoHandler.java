@@ -23,7 +23,7 @@ public class ErroDeValidacaoHandler {
     @ExceptionHandler(RegistroDuplicadoException.class)
     public String alreadyCadastre(RegistroDuplicadoException e) {
 
-        return "Ocorrência de registro duplicado: cadastro com essa data e descrição já foi efetuado.";
+        return "Ocorrência de registro duplicado: cadastro com descrição nessa data(mes/ano) já foi efetuado.";
 
     }
 

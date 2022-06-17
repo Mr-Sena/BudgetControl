@@ -3,11 +3,9 @@ package br.com.alura.challenge.backend.FinanceValuation.infrastructure.controlle
 
 import br.com.alura.challenge.backend.FinanceValuation.core.Balance;
 import br.com.alura.challenge.backend.FinanceValuation.domain.Receita;
-import br.com.alura.challenge.backend.FinanceValuation.infrastructure.config.validacao.RegistroDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.DTO.ReceitaDTO;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.form.ReceitaForm;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.ReceitaRepository;
-import br.com.alura.challenge.backend.FinanceValuation.service.DataConverter;
 import br.com.alura.challenge.backend.FinanceValuation.service.ValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
