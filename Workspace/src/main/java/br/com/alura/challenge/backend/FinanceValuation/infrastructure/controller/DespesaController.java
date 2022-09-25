@@ -23,7 +23,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/despesas")
+@RequestMapping("/despesa")
 public class DespesaController {
 
 
