@@ -2,8 +2,6 @@ package br.com.alura.challenge.backend.FinanceValuation.service;
 
 import br.com.alura.challenge.backend.FinanceValuation.core.Balance;
 import br.com.alura.challenge.backend.FinanceValuation.core.Repositorio;
-import br.com.alura.challenge.backend.FinanceValuation.domain.Despesa;
-import br.com.alura.challenge.backend.FinanceValuation.domain.Receita;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.config.validacao.RegistroDuplicadoException;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.controller.form.Formulario;
 import br.com.alura.challenge.backend.FinanceValuation.infrastructure.repository.DespesaRepository;
@@ -23,32 +21,7 @@ public class ValidationService {
         List<Balance> registrosByData = repositorio.findByData(dataConvertida);
         List<Balance> registrosByDescription = repositorio.findByDescricao(formulario.getDescricao());
 
-        boolean occurrenceSameMonth = false;
-
-        for (Balance saldo : registrosByData) {
-
-            if (saldo.getData().getYear() == dataConvertida.getYear()
-                    && saldo.getData().getMonth() == dataConvertida.getMonth()) {
-                occurrenceSameMonth = true;
-                break;
-            } else
-                occurrenceSameMonth = false;
-
-        }
-
-
-        boolean occurrenceSameDescription = false;
-        for (Balance saldo : registrosByDescription) {
-
-            if (saldo.getDescricao().equals(formulario.getDescricao())) {
-                occurrenceSameDescription = true;
-                break;
-            } else
-                occurrenceSameDescription = false;
-
-        }
-
-        List<Boolean> validacoes = Arrays.asList(occurrenceSameMonth, occurrenceSameDescription);
+        List<Boolean> validacoes = validateToUpdate(registrosByData, registrosByDescription, dataConvertida, formulario);
 
         return validacoes;
 
@@ -58,7 +31,7 @@ public class ValidationService {
 
         LocalDate dataConvertida = DataConverter.toConvert(formulario.getData());
 
-        List<Boolean> validationResults = ValidationService.validate(dataConvertida, formulario, repository);
+        List<Boolean> validationResults = validate(dataConvertida, formulario, repository);
 
         boolean occurrenceSameMonth = validationResults.get(0);
         boolean occurrenceSameDescription = validationResults.get(1);
@@ -69,10 +42,6 @@ public class ValidationService {
 
 
     }
-
-
-
-
 
 
 
@@ -103,13 +72,11 @@ public class ValidationService {
         List registrosByData = new ArrayList();
 
         if (repositorio instanceof ReceitaRepository) {
-            registrosByData = new ArrayList<>();
             ReceitaRepository repoReceita = (ReceitaRepository) repositorio;
             registrosByData = repoReceita.receitasByMonth(mes, ano);
         }
 
         if (repositorio instanceof DespesaRepository) {
-            registrosByData = new ArrayList<>();
             DespesaRepository repoDespesa = (DespesaRepository) repositorio;
             registrosByData = repoDespesa.despesasByMonth(mes, ano);
         }
